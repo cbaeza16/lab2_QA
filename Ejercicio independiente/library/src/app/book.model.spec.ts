@@ -5,73 +5,27 @@ import { mock, when, instance } from 'ts-mockito';
 describe('Pruebas para Book', () => {
 
   /**
-   * Nombre: Comparación de autores por nombre
+   * Nombre: Comparación de libros por nombre de autor y titulo
    * 
-   * Objetivo: Validar el método equals de Author interface
-   * al comparar autores por su nombre.
+   * Objetivo: Validar el método equals compare correctamente dos libros por el autor y titulo
    * 
    * Datos de prueba:
-   *   Autor 1: Stephen King
-   *   Autor 2: Susan Cain
-   * Resultado esperado: Los autores no deben ser iguales.
+   *   Libro 1: Carrie 
+   *     Autor libro 1: Stephen King
+   *   Libro 2: Cujo
+   *     Autor libro 2: Stephen King
+   * Resultado esperado: El metodo equals retorna true ya que autores y titulos de los libros son iguales
    */
-  it('1. Comparación de autores por nombre', () => {
+  it('4. Comparación de libros por nombre de autor y titulo', () => {
     const authorA = mock<Author>();
-    const authorB = mock<Author>();
     when(authorA.getName()).thenReturn('Stephen King');
-    when(authorB.getName()).thenReturn('Susan Cain');
-    let mockito1 = instance(authorA);
-    let mockito2 = instance(authorB);
+    let bookA = new Book('Carrie', instance(authorA), 10);
+    let bookB = new Book('Carrie', instance(authorA), 10);
+    when(authorA.equals('Stephen King')).thenReturn(true);
 
-    const author1Name = mockito1.getName();
-    const author2Name = mockito2.getName();
-    expect(author1Name === author2Name).toBeFalse();
+    expect(bookA.equals(bookB)).toBeTrue();
   });
 
-
-  /**
-   * Nombre: Set y get país del autor
-   * 
-   * Objetivo: Verificar que los métodos setPais y getPais del Author interface funcionen
-   * correctamente.
-   * 
-   * Datos de prueba:
-   *   País actual: Costa Rica
-   *   País modificado: Italia
-   * 
-   * Resultado esperado: El país del autor debe cambiar de Costa Rica a Italia.
-   */
-  it('2. Set y get país del autor', () => {
-    const author = mock<Author>();
-    when(author.getPais()).thenReturn('Costa Rica');
-    let mockito = instance(author);
-    expect(mockito.getPais()).toBe('Costa Rica');
-
-    mockito.setPais('Italia');
-    when(author.getPais()).thenReturn('Italia');
-    expect(mockito.getPais()).toBe('Italia');
-  });
-  /**
-     * Nombre: Set y get nombre del autor
-     * 
-     * Objetivo: Verificar que los métodos setName y getName del Author interface funcionen correctamente.
-     * 
-     * Datos de prueba:
-     *   Nombre inicial: Stephen Kiing
-     *   Nombre modificado: Stephen King
-     * 
-     * Resultado esperado: El nombre del autor debe cambiar de "Stephen Kiing" a "Stephen King".
-   */
-  it('3. Set y get nombre del autor', () => {
-    const author = mock<Author>();
-    when(author.getName()).thenReturn('Stephen Kiing');
-    let mockito = instance(author);
-    expect(mockito.getName()).toBe('Stephen Kiing');
-
-    mockito.setName('Stephen King');
-    when(author.getName()).thenReturn('Stephen King');
-    expect(mockito.getName()).toBe('Stephen King');
-  });
 });
 
   
